@@ -35,6 +35,7 @@ func ready_script():
 		var name = $Blocks.tile_set.tile_get_name(id)
 		$BlockSelector.add_block(id, name)
 		block_scripts[id] = load("res://logics/blocks/" + name + ".gd").new()
+		block_scripts[id]._init_block(id)
 
 func next_tick():
 	for i in tile_entities:
@@ -48,6 +49,9 @@ func get_tile_entity(vec2):
 	if tile_entities.has(vec2.x) and tile_entities[vec2.x].has(vec2.y):
 		return tile_entities[vec2.x][vec2.y]
 	return null
+
+func get_block(vec2):
+	return $Blocks.get_cell(vec2)
 
 func place_tile_entity(vec2, tile_entity):
 	tile_entity.position = $Blocks.map_to_world(vec2)
@@ -78,7 +82,7 @@ func _on_tilemap_updated(vec2, action):
 				if tile_entity != null:
 					place_tile_entity(vec2, tile_entity)
 			
-			block_scripts[selected_block_id]._on_block_action(vec2, action)
+			block_scripts[selected_block_id]._on_block_action(self, vec2, action)
 			
 			if action == "block_broken":
 				break_tile_entity(vec2)

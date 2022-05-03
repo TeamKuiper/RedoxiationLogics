@@ -28,6 +28,9 @@ func _input(event):
 		if event.is_pressed():
 			ongoing_action = get_actions(event)
 			
+			if ongoing_action == null:
+				ongoing_action = []
+			
 			var vec2 = world_to_map(get_viewport().get_mouse_position())
 			for action in ongoing_action:
 				emit_signal("tilemap_event", vec2, action)

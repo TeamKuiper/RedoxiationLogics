@@ -1,21 +1,26 @@
 extends Node
 
-func _on_block_action(vec2, action):
-	on_block_action(vec2, action)
+var id
+
+func _init_block(i):
+	id = i
+
+func _on_block_action(world, vec2, action):
+	on_block_action(world, vec2, action)
 	
 	match action:
 		"block_placed":
-			on_block_placed(vec2)
+			on_block_placed(world, vec2)
 		"block_broken":
-			on_block_broken(vec2)
+			on_block_broken(world, vec2)
 
-func on_block_action(_vec2, _action):
+func on_block_action(_world, _vec2, _action):
 	pass
 
-func on_block_placed(_vec2):
+func on_block_placed(_world, _vec2):
 	pass
 
-func on_block_broken(_vec2):
+func on_block_broken(_world, _vec2):
 	pass
 
 func create_tile_entity():
