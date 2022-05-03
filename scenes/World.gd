@@ -4,6 +4,7 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+var block_name_to_id = {}
 var block_scripts = {}
 var tile_entities = {}
 
@@ -36,6 +37,7 @@ func ready_script():
 		$BlockSelector.add_block(id, name)
 		block_scripts[id] = load("res://logics/blocks/" + name + ".gd").new()
 		block_scripts[id]._init_block(id)
+		block_name_to_id[name] = id
 
 func next_tick():
 	for i in tile_entities:
@@ -51,10 +53,11 @@ func get_tile_entity(vec2):
 	return null
 
 func get_block(vec2):
-	return $Blocks.get_cell(vec2)
+	return $Blocks.get_cell(vec2.x, vec2.y)
 
 func place_tile_entity(vec2, tile_entity):
-	tile_entity.position = $Blocks.map_to_world(vec2)
+	var world_pos = $Blocks.map_to_world(vec2)
+	tile_entity.position = Vector2(world_pos.x+16, world_pos.y+16)
 	tile_entity._tile_init(self, vec2)
 	if tile_entities.has(vec2.x):
 		tile_entities[vec2.x][vec2.y] = tile_entity

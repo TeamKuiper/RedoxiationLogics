@@ -12,7 +12,6 @@ func _tile_init(wrld, vec2):
 
 func set_tile_texture(txture):
 	texture = txture
-	offset = Vector2(16, 16)
 
 func on_update():
 	pass
